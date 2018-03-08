@@ -1,3 +1,6 @@
+/**
+  * Copyright - see LICENCE
+  */
 package com.blackcrowsys.crimson.matrix
 
 object Matrix {
