@@ -8,6 +8,12 @@ object Matrix {
                 val contents: Array[Double],
                 val columns: Int) {
 
+    def apply(function: Double => Double): Matrix = {
+      val results = for(v <- this.contents) yield function.apply(v)
+      Matrix.create(results, this.columns)
+    }
+
+
     val rows: Int = contents.length / columns
 
     def transpose = {
