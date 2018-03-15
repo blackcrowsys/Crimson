@@ -10,6 +10,19 @@ object Matrix {
 
     val rows: Int = contents.length / columns
 
+    def transpose = {
+      val results = Array.ofDim[Double](this.rows * this.columns)
+      for (index <- 0 until results.length) {
+        results(index) = getTransposeFromIndex(index)
+      }
+      Matrix.create(results, this.rows)
+    }
+
+    private def getTransposeFromIndex(index: Int): Double = {
+      val (row: Int, col: Int) = getCoords(index, this.columns, this.rows)
+      get(col, row)
+    }
+
     def dotProduct(that: Matrix): Matrix = {
       val results = Array.ofDim[Double](this.rows * that.columns)
 
@@ -32,7 +45,7 @@ object Matrix {
 
     private def getCoords(index: Int, rows: Int, columns: Int): (Int, Int) = {
       val row = (floor(index / columns) + 1).toInt
-      val colIndex = index % columns
+      val colIndex = (index + 1) % columns
       val col = if (colIndex == 0) columns else colIndex
       (row, col)
     }
@@ -62,7 +75,11 @@ object Matrix {
       if (row > contents.length / columns || row < 1) {
         throw new IllegalArgumentException("Incorrect Row Index: " + row)
       }
-      contents((row - 1) * this.columns + (col - 1))
+      contents(getIndex(row, col, this.rows, this.columns))
+    }
+
+    private def getIndex(row: Int, col: Int, rows: Int, columns: Int): Int = {
+      (row - 1) * columns + (col - 1)
     }
 
     def equals(that: Matrix): Boolean = {

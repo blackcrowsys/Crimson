@@ -62,10 +62,22 @@ class MatrixTests extends FunSuite {
     assert(Matrix.create(Array(49, 16.8), 1).equals(actual))
   }
 
+  test("dot product with two matched matrices") {
+    val actual = x * y
+    assert(Matrix.create(Array(53.8, 88.4, 18.8, 29.6), 2).equals(actual))
+  }
+
   test("scalar multiplication of a matrix") {
     val actual = x * 2
 
     assert(Matrix.create(Array(25, 9.6, 6.8, 4), 2).equals(actual))
+  }
+
+  test("transposing a matrix") {
+    val m = Matrix.create(Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 3)
+    val transpose = m.transpose;
+
+    assert(Matrix.create(Array(1, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12), 3).equals(transpose))
   }
 
 }
