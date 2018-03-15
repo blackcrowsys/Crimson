@@ -56,6 +56,12 @@ class MatrixTests extends FunSuite {
     x + z
   }
 
+  test("multiplication with uneven but matched matrices") {
+    val actual = x * z
+
+    assert(Matrix.create(Array(49, 16.8), 1).equals(actual))
+  }
+
   test("scalar multiplication of a matrix") {
     val actual = x * 2
 

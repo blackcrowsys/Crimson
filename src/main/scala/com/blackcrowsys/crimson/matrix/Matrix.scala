@@ -1,5 +1,7 @@
 package com.blackcrowsys.crimson.matrix
 
+import scala.math.floor
+
 object Matrix {
 
   class Matrix(
@@ -7,6 +9,36 @@ object Matrix {
                 val columns: Int) {
 
     val rows: Int = contents.length / columns
+
+    def dotProduct(that: Matrix): Matrix = {
+      val results = Array.ofDim[Double](this.rows * that.columns)
+
+      for (index <- 0 until results.length) {
+        results(index) = calculateSum(index, this.rows, that.columns, that)
+      }
+
+      Matrix.create(results, that.columns)
+    }
+
+    def calculateSum(index: Int, rows: Int, columns: Int, that: Matrix): Double = {
+      val (row: Int, col: Int) = getCoords(index, rows, columns)
+
+      var sum: Double = 0
+      for (i <- 1 to this.columns) {
+        sum = sum + this.get(row, i) * that.get(i, col)
+      }
+      sum
+    }
+
+    private def getCoords(index: Int, rows: Int, columns: Int): (Int, Int) = {
+      val row = (floor(index / columns) + 1).toInt
+      val colIndex = index % columns
+      val col = if (colIndex == 0) columns else colIndex
+      (row, col)
+    }
+
+    def *(that: Matrix): Matrix = dotProduct(that)
+
 
     def *(scaler: Double): Matrix = {
       val result = for (v <- this.contents) yield scaler * v
@@ -23,17 +55,14 @@ object Matrix {
     }
 
 
-    def get(row: Int, col: Int) = {
-      if (col > columns) {
-        throw new IllegalArgumentException("Column Index exceeds number of columns: " + col)
+    def get(row: Int, col: Int): Double = {
+      if (col > columns || col < 1) {
+        throw new IllegalArgumentException("Incorrect Column Index: " + col)
       }
-      if (row > contents.length / columns) {
-        throw new IllegalArgumentException("Row Index exceeds number of rows: " + row)
+      if (row > contents.length / columns || row < 1) {
+        throw new IllegalArgumentException("Incorrect Row Index: " + row)
       }
-      val subtractor = if (row == 1 && col == 1) 1
-      else if (col == 1) 0
-      else 1
-      contents(row * col - subtractor)
+      contents((row - 1) * this.columns + (col - 1))
     }
 
     def equals(that: Matrix): Boolean = {
