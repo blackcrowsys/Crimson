@@ -80,4 +80,11 @@ class MatrixTests extends FunSuite {
     assert(Matrix.create(Array(1, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12), 3).equals(transpose))
   }
 
+  test("applying a function to a matrix"){
+    val function = (x: Double) =>  Math.pow(x, 2)
+    val actual = y.apply(function)
+
+    assert(Matrix.create(Array(4, 16, 36, 64), 2).equals(actual))
+  }
+
 }
