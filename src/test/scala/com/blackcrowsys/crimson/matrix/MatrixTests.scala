@@ -4,10 +4,11 @@ import org.scalatest.FunSuite
 
 class MatrixTests extends FunSuite {
 
-  val x = Matrix.create(Array(12.5, 4.8, 3.4, 2), 2)
-  val y = Matrix.create(Array(2, 4, 6, 8), 2)
-  val z = Matrix.create(Array(2, 5), 1)
-  val expected = Matrix.create(Array(14.5, 8.8, 9.4, 10), 2)
+  val x: Matrix.Matrix = Matrix.create(Array(12.5, 4.8, 3.4, 2), 2)
+  val y: Matrix.Matrix = Matrix.create(Array(2, 4, 6, 8), 2)
+  val z: Matrix.Matrix = Matrix.create(Array(2, 5), 1)
+  val t: Matrix.Matrix = Matrix.create(Array(3, 5, 7, 6, 5, 1), 3)
+  val expected: Matrix.Matrix = Matrix.create(Array(14.5, 8.8, 9.4, 10), 2)
 
   test("it gets the right values by index") {
     val e1 = x.get(1, 1)
@@ -44,7 +45,7 @@ class MatrixTests extends FunSuite {
   }
 
   test("two matrix are not the same") {
-    assert(x.equals(y) == false)
+    assert(!x.equals(y))
   }
 
   test("it can add two matrix together") {
@@ -75,7 +76,7 @@ class MatrixTests extends FunSuite {
 
   test("transposing a matrix") {
     val m = Matrix.create(Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 3)
-    val transpose = m.transpose;
+    val transpose = m.transpose
 
     assert(Matrix.create(Array(1, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12), 3).equals(transpose))
   }
@@ -87,4 +88,12 @@ class MatrixTests extends FunSuite {
     assert(Matrix.create(Array(4, 16, 36, 64), 2).equals(actual))
   }
 
+  test("sum of a column in a matrix") {
+    assert(z.sumOfColumn(1) == 7.0)
+    assert(y.sumOfColumn(1) == 8.0)
+    assert(y.sumOfColumn(2) == 12.0)
+    assert(t.sumOfColumn(1) == 9.0)
+    assert(t.sumOfColumn(2) == 10.0)
+    assert(t.sumOfColumn(3) == 8.0)
+  }
 }
