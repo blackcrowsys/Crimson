@@ -1,29 +1,17 @@
 package com.blackcrowsys.crimson.ils
 
-import javax.swing.plaf.BorderUIResource.MatteBorderUIResource
-
 import com.blackcrowsys.crimson.common.Tolerence
-import com.blackcrowsys.crimson.matrix.Matrix
-import com.blackcrowsys.crimson.matrix.Matrix.{Matrix, create}
+import com.blackcrowsys.crimson.matrix.Matrix.Matrix
 
-class GradientDescent(val derivative: Matrix => Matrix,
-                      val initial: Matrix,
-                      val learningRate: Double,
-                      val tolerence: Tolerence) {
+class GradientDescent {
 
-  def interate(): Matrix = {
+  def iterate(derivative: Matrix => Matrix, initial: Matrix, learningRate: Double, tolerence: Tolerence): Matrix = {
     val zero = initial.*(0)
     var derived: Matrix = derivative.apply(initial)
-    if (tolerence.isWithinTolerence(zero, derived)) return initial
-
-    var next = initial.*(1)
-
-    while (!tolerence.isWithinTolerence(derived, zero)) {
-      derived = derivative.apply(next)
-      var change = derived.*(learningRate).*(-1)
-      next = next + change
+    if (tolerence.isWithinTolerence(zero, derived)) {
+      initial
+    } else {
+      iterate(derivative, initial + (derived * learningRate * -1), learningRate, tolerence)
     }
-    next
   }
-
 }
