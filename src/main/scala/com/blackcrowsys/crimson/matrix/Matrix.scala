@@ -16,7 +16,7 @@ object Matrix {
 
     val rows: Int = contents.length / columns
 
-    def transpose = {
+    def transpose: Matrix = {
       val results = Array.ofDim[Double](this.rows * this.columns)
       for (index <- 0 until results.length) {
         results(index) = getTransposeFromIndex(index)
@@ -73,7 +73,6 @@ object Matrix {
       Matrix.create(result, this.columns)
     }
 
-
     def get(row: Int, col: Int): Double = {
       if (col > columns || col < 1) {
         throw new IllegalArgumentException("Incorrect Column Index: " + col)
@@ -98,6 +97,16 @@ object Matrix {
           return false
       }
       true
+    }
+
+    def columnSum(column: Int): Double = {
+      def loop(row: Int, acc: Double): Double = {
+        if (row > rows) acc
+        else {
+          loop(row + 1, acc + get(row, column))
+        }
+      }
+      loop(1, 0.0)
     }
   }
 
