@@ -89,11 +89,11 @@ class MatrixTests extends FunSuite {
   }
 
   test("sum of a column in a matrix") {
-    assert(z.sumOfColumn(1) == 7.0)
-    assert(y.sumOfColumn(1) == 8.0)
-    assert(y.sumOfColumn(2) == 12.0)
-    assert(t.sumOfColumn(1) == 9.0)
-    assert(t.sumOfColumn(2) == 10.0)
-    assert(t.sumOfColumn(3) == 8.0)
+    assert(z.columnSum(1) == 7.0)
+    assert(y.columnSum(1) == 8.0)
+    assert(y.columnSum(2) == 12.0)
+    assert(t.columnSum(1) == 9.0)
+    assert(t.columnSum(2) == 10.0)
+    assert(t.columnSum(3) == 8.0)
   }
 }

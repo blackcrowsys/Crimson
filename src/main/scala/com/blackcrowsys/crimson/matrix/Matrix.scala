@@ -99,7 +99,7 @@ object Matrix {
       true
     }
 
-    def sumOfColumn(column: Int): Double = {
+    def columnSum(column: Int): Double = {
       def loop(row: Int, acc: Double): Double = {
         if (row > rows) acc
         else {
