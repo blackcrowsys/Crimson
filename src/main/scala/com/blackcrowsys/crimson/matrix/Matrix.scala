@@ -20,7 +20,7 @@ object Matrix {
     }
 
 
-    def sumOfSquaredDifference(compare: Double, column: Int) = {
+    def sumOfSquaredDifference(compare: Double, column: Int): Double = {
       def loop(row: Int, acc: Double): Double = {
         if (row > rows) acc
         else {

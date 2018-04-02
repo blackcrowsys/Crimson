@@ -103,8 +103,10 @@ class MatrixTests extends FunSuite {
     assert(actual == 46.toDouble)
   }
 
-  test("it gives a column in a list"){
-    val actual:Array[Double] = x.getColumnAsArray(1)
-    assert(actual == Array(12.5, 3.4))
+  test("it gives a column in a list") {
+    val actual: Array[Double] = x.getColumnAsArray(1)
+    assert(actual(0) == 12.5)
+    assert(actual(1) == 3.4)
+    assert(actual.length == 2)
   }
 }
