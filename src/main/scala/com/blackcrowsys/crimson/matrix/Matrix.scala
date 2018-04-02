@@ -7,9 +7,32 @@ object Matrix {
   class Matrix(
                 val contents: Array[Double],
                 val columns: Int) {
+    def getColumnAsArray(column: Int): Array[Double] = {
+      def loop(row: Int, acc: Array[Double]): Array[Double] = {
+        if (row > rows) acc
+        else {
+          loop(row + 1, acc :+ get(row, column)
+          )
+        }
+      }
+
+      loop(1, new Array[Double](0))
+    }
+
+
+    def sumOfSquaredDifference(compare: Double, column: Int) = {
+      def loop(row: Int, acc: Double): Double = {
+        if (row > rows) acc
+        else {
+          loop(row + 1, acc + Math.pow(get(row, column) - compare, 2))
+        }
+      }
+
+      loop(1, 0.toDouble)
+    }
 
     def apply(function: Double => Double): Matrix = {
-      val results = for(v <- this.contents) yield function.apply(v)
+      val results = for (v <- this.contents) yield function.apply(v)
       Matrix.create(results, this.columns)
     }
 
@@ -106,6 +129,7 @@ object Matrix {
           loop(row + 1, acc + get(row, column))
         }
       }
+
       loop(1, 0.0)
     }
   }
