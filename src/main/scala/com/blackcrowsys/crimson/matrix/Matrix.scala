@@ -1,12 +1,12 @@
 package com.blackcrowsys.crimson.matrix
 
+import scala.io.Source
 import scala.math.floor
 
 object Matrix {
 
-  class Matrix(
-                val contents: Array[Double],
-                val columns: Int) {
+  class Matrix(val contents: Array[Double], val columns: Int) {
+
     def getColumnAsArray(column: Int): Array[Double] = {
       def loop(row: Int, acc: Array[Double]): Array[Double] = {
         if (row > rows) acc
@@ -138,6 +138,32 @@ object Matrix {
     if (contents.length % cols != 0 || contents.length < cols)
       throw new IllegalArgumentException("Contents mismatch")
     new Matrix(contents, cols)
+  }
+
+  def createFromResourceFile(filename: String, firstLineHeader: Boolean, indexColumn: Boolean): Matrix = {
+    val source = Source.fromResource(filename)
+    var skipped = false
+    var columns = 0
+    var contents: Array[Double] = Array()
+    for (line <- source.getLines()) {
+      if (firstLineHeader && !skipped)
+        skipped = true
+      else {
+        var tokens: Array[String] = line.split(",")
+        if (indexColumn)
+          tokens = tokens.drop(1)
+        val values: Array[Double] = convertFromString(tokens)
+        if (columns == 0)
+          columns = tokens.length
+        contents = contents ++ values
+      }
+    }
+    source.close()
+    create(contents, columns)
+  }
+
+  def convertFromString(stringValues: Array[String]): Array[Double] = {
+    for (s <- stringValues) yield s.toDouble
   }
 
 }

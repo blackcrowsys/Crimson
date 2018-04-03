@@ -109,4 +109,11 @@ class MatrixTests extends FunSuite {
     assert(actual(1) == 3.4)
     assert(actual.length == 2)
   }
+
+  test("it can create a matrix from a file") {
+    val matrix: Matrix.Matrix = Matrix.createFromResourceFile("Advertising.csv", true, true)
+    assert(matrix != null)
+    assert(matrix.columns == 4)
+    assert(matrix.rows == 200)
+  }
 }
