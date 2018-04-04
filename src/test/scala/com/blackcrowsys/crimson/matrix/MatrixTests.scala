@@ -116,4 +116,18 @@ class MatrixTests extends FunSuite {
     assert(matrix.columns == 4)
     assert(matrix.rows == 200)
   }
+
+  test("it can give an array of row data") {
+    val rows: Array[Array[Double]] = y.rowArray()
+
+    assert(rows.length == 2)
+    val row1: Array[Double] = rows(0)
+    val row2: Array[Double] = rows(1)
+
+    assert(row1.length == 2)
+    assert(row1(0) == 2)
+    assert(row1(1) == 4)
+    assert(row2(0) == 6)
+    assert(row2(1) == 8)
+  }
 }
