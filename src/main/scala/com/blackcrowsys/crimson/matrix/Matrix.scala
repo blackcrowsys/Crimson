@@ -7,6 +7,8 @@ object Matrix {
 
   class Matrix(val contents: Array[Double], val columns: Int) {
 
+    val rows: Int = contents.length / columns
+
     def rowArray(): Array[Array[Double]] = {
       var from: Int = 0
       var to: Int = this.columns
@@ -19,7 +21,6 @@ object Matrix {
       rowArray
     }
 
-
     def getColumnAsArray(column: Int): Array[Double] = {
       def loop(row: Int, acc: Array[Double]): Array[Double] = {
         if (row > rows) acc
@@ -31,7 +32,6 @@ object Matrix {
 
       loop(1, new Array[Double](0))
     }
-
 
     def sumOfSquaredDifference(compare: Double, column: Int): Double = {
       def loop(row: Int, acc: Double): Double = {
@@ -49,9 +49,6 @@ object Matrix {
       Matrix.create(results, this.columns)
     }
 
-
-    val rows: Int = contents.length / columns
-
     def transpose: Matrix = {
       val results = Array.ofDim[Double](this.rows * this.columns)
       for (index <- 0 until results.length) {
@@ -65,7 +62,7 @@ object Matrix {
       get(col, row)
     }
 
-    def dotProduct(that: Matrix): Matrix = {
+    def dot(that: Matrix): Matrix = {
       val results = Array.ofDim[Double](this.rows * that.columns)
 
       for (index <- 0 until results.length) {
@@ -92,7 +89,14 @@ object Matrix {
       (row, col)
     }
 
-    def *(that: Matrix): Matrix = dotProduct(that)
+    def *(that: Matrix): Matrix = {
+      if (this.columns != that.columns || this.contents.length != that.contents.length)
+        throw new IllegalArgumentException("Matrix size mismatch")
+      val result =
+        for ((v1, v2) <- this.contents zip that.contents)
+          yield v1 * v2
+      Matrix.create(result, this.columns)
+    }
 
 
     def *(scaler: Double): Matrix = {

@@ -58,14 +58,14 @@ class MatrixTests extends FunSuite {
     x + z
   }
 
-  test("multiplication with uneven but matched matrices") {
-    val actual = x * z
+  test("dot product with uneven but matched matrices") {
+    val actual = x.dot(z)
 
     assert(Matrix.create(Array(49, 16.8), 1).equals(actual))
   }
 
   test("dot product with two matched matrices") {
-    val actual = x * y
+    val actual = x.dot(y)
     assert(Matrix.create(Array(53.8, 88.4, 18.8, 29.6), 2).equals(actual))
   }
 
@@ -73,6 +73,11 @@ class MatrixTests extends FunSuite {
     val actual = x * 2
 
     assert(Matrix.create(Array(25, 9.6, 6.8, 4), 2).equals(actual))
+  }
+
+  test("multiplication of two identical matrices") {
+    val actual = x * y
+    assert(Matrix.create(Array(25, 19.2, 20.4, 16), 2).equals(actual))
   }
 
   test("transposing a matrix") {
