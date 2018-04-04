@@ -7,6 +7,19 @@ object Matrix {
 
   class Matrix(val contents: Array[Double], val columns: Int) {
 
+    def rowArray(): Array[Array[Double]] = {
+      var from: Int = 0
+      var to: Int = this.columns
+      val rowArray: Array[Array[Double]] = Array.ofDim(this.rows)
+      for (i <- 0 until rows) {
+        rowArray(i) = contents.slice(from, to)
+        from += this.columns
+        to += this.columns
+      }
+      rowArray
+    }
+
+
     def getColumnAsArray(column: Int): Array[Double] = {
       def loop(row: Int, acc: Array[Double]): Array[Double] = {
         if (row > rows) acc
