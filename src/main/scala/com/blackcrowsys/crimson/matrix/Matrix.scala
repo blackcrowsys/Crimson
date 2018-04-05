@@ -1,5 +1,7 @@
 package com.blackcrowsys.crimson.matrix
 
+import com.blackcrowsys.crimson.common.Tolerence
+
 import scala.io.Source
 import scala.math.floor
 
@@ -105,11 +107,20 @@ object Matrix {
     }
 
     def +(that: Matrix): Matrix = {
-      if (this.columns != that.columns || this.contents.length != that.contents.length)
+      if (this.contents.length != that.contents.length || this.columns != that.columns)
         throw new IllegalArgumentException("Matrix size mismatch")
       val result =
         for ((v1, v2) <- this.contents zip that.contents)
           yield v1 + v2
+      Matrix.create(result, this.columns)
+    }
+
+    def -(that: Matrix): Matrix = {
+      if (this.contents.length != that.contents.length || this.columns != that.columns)
+        throw new IllegalArgumentException("Matrix size mismatch")
+      val result =
+        for ((v1, v2) <- this.contents zip that.contents)
+          yield v1 - v2
       Matrix.create(result, this.columns)
     }
 
@@ -134,6 +145,18 @@ object Matrix {
         false
       for ((v1, v2) <- this.contents zip that.contents) {
         if (v1 != v2)
+          return false
+      }
+      true
+    }
+
+    def equals(that: Matrix, tolerence: Tolerence): Boolean = {
+      if (this.columns != that.columns)
+        false
+      if (this.contents.length != that.contents.length)
+        false
+      for ((v1, v2) <- this.contents zip that.contents) {
+        if (!tolerence.isWithinTolerence(this, that))
           return false
       }
       true
