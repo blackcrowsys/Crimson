@@ -135,4 +135,13 @@ class MatrixTests extends FunSuite {
     assert(row2(0) == 6)
     assert(row2(1) == 8)
   }
+
+  test("it can create a matrix populated with a give value") {
+    val ROWS: Int = 3
+    val COLS: Int = 4
+    val matrix: Matrix.Matrix = Matrix.create(ROWS, COLS, 0.toDouble)
+    assert(matrix.rows == ROWS)
+    assert(matrix.columns == COLS)
+    assert(0 == matrix.contents.sum)
+  }
 }
