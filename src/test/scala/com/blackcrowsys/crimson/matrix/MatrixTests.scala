@@ -1,5 +1,6 @@
 package com.blackcrowsys.crimson.matrix
 
+import com.blackcrowsys.crimson.common.Tolerence
 import org.scalatest.FunSuite
 
 class MatrixTests extends FunSuite {
@@ -52,6 +53,12 @@ class MatrixTests extends FunSuite {
   test("it can add two matrix together") {
     val actual = x + y
     assert(actual.equals(expected))
+  }
+
+  test("it can subtract one matrix from another") {
+    val actual = x - y
+    val tolerence: Tolerence = new Tolerence(0.00001)
+    assert(Matrix.create(Array(10.5, 0.8, -2.6, -6), 2).equals(actual, tolerence))
   }
 
   assertThrows[IllegalArgumentException] {
