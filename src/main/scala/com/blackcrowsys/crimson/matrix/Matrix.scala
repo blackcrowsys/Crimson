@@ -157,6 +157,11 @@ object Matrix {
     new Matrix(contents, cols)
   }
 
+  def create(rows: Int, columns: Int, value: Double): Matrix = {
+    val contentArray: Array[Double] = (for (i <- 0 until rows * columns) yield value).toArray
+    create(contentArray, columns)
+  }
+
   def createFromResourceFile(filename: String, firstLineHeader: Boolean, indexColumn: Boolean): Matrix = {
     val source = Source.fromResource(filename)
     var skipped = false
