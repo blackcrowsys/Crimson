@@ -151,4 +151,10 @@ class MatrixTests extends FunSuite {
     assert(matrix.columns == COLS)
     assert(0 == matrix.contents.sum)
   }
+
+  test("to string") {
+    val expected: String = "2.0, 4.0||6.0, 8.0"
+    val actual = y.toString
+    assert(expected == actual)
+  }
 }
