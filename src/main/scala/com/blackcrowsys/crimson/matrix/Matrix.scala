@@ -172,6 +172,11 @@ object Matrix {
 
       loop(1, 0.0)
     }
+
+    override def toString: String = {
+      val rowList: Array[String] = for (row <- this.rowArray()) yield row.mkString(", ")
+      rowList.mkString("||")
+    }
   }
 
   def create(contents: Array[Double], cols: Int): Matrix = {
