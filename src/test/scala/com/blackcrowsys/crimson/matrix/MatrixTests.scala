@@ -151,6 +151,18 @@ class MatrixTests extends FunSuite {
     assert(matrix.columns == COLS)
     assert(0 == matrix.contents.sum)
   }
+  
+  test("it can create a matrix with random values") {
+    val ROWS: Int = 3
+    val COLS: Int = 4
+    val MULTIPLIER = 2
+    val SUBTRACTOR = 1
+    val matrix: Matrix.Matrix = Matrix.createRandom(ROWS, COLS, MULTIPLIER, SUBTRACTOR)
+
+    assert(matrix.rows == ROWS)
+    assert(matrix.columns == COLS)
+    assert(matrix.get(ROWS, COLS) < 1 && matrix.get(ROWS, COLS) > -1)
+  }
 
   test("to string") {
     val expected: String = "2.0, 4.0||6.0, 8.0"

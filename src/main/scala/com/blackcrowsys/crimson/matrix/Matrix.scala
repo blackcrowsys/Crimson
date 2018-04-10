@@ -4,6 +4,7 @@ import com.blackcrowsys.crimson.common.Tolerence
 
 import scala.io.Source
 import scala.math.floor
+import scala.util.Random
 
 object Matrix {
 
@@ -187,6 +188,12 @@ object Matrix {
 
   def create(rows: Int, columns: Int, value: Double): Matrix = {
     val contentArray: Array[Double] = (for (i <- 0 until rows * columns) yield value).toArray
+    create(contentArray, columns)
+  }
+
+  def createRandom(rows: Int, columns: Int, multiplier: Int, subractor: Int): Matrix = {
+    val contentArray: Array[Double] = (for (i <- 0 until rows * columns) yield Random.nextDouble() * 2 - 1)
+      .toArray
     create(contentArray, columns)
   }
 
