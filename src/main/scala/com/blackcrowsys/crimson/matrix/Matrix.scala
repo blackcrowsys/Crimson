@@ -21,6 +21,7 @@ import scala.util.Random
   * Although the array is visible outside of the matrix, as one of it's field, and can be mutated, for now, you SHOULD
   * NOT change it as this will be fixed in future release.
   **/
+@deprecated
 object Matrix {
 
   /**
@@ -29,6 +30,7 @@ object Matrix {
     * @param contents the array containing the row-based values of matrix
     * @param columns  the number of columns in the matrix
     */
+  @deprecated
   class Matrix(val contents: Array[Double], val columns: Int) {
 
     val rows: Int = contents.length / columns
